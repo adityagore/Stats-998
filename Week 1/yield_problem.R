@@ -56,9 +56,24 @@ pdf("yieldCombinePlot.pdf",width=11,height=8)
 plot(finalPlot)
 dev.off()
 
+# Statisitcal model
+require(lme4)
+options(contrasts=c("contr.sum","contr.sum"))
+# Model 1 with interaction effects (Best of all models)
+yield.model.lm1 <- lm(Yield~Irrigation*Variety,data=yield)
+plot(yield.model.lm1)
+summary(yield.model.lm1)
 
+# Model 2 to determine the effect of variety on yields
+yield.model.lm2 <- lm(Yield~Variety,data=yield)
+plot(yield.model.lm2)
+summary(yield.model.lm2)
 
+# Model 3 to determine the effect of irrigation on yields
+yield.model.lm3 <- lm(Yield~Irrigation,data=yield)
+plot(yield.model.lm3)
+summary(yield.model.lm3)
 
-
-yield.irrigation.variety.plot <- ggplot(data=yield,aes())
-
+# Model 4 to determine the fixed effects while controlling the variation among fields
+yield.model.lmer <- lmer(Yield~Irrigation*Variety+(1|Irrigation),data=yield,REML=TRUE)
+yield.model.lmer2 <- update(yield.model.lmer,REML=FALSE)
