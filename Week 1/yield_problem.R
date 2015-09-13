@@ -48,9 +48,9 @@ blank<-grid::rectGrob(gp=grid::gpar(col="white"))
 finalPlot <- arrangeGrob(g1,g2,ncol=2,widths=c(0.6,0.4))
 finalPlot2 <- grid.arrange(g1,g2,ncol=2,widths=c(0.7,0.3))
 
-ggsave(filename="yieldBoxplot.pdf",yield.boxplot,width=8,height=5)
+# ggsave(filename="yieldBoxplot.pdf",yield.boxplot,width=8,height=5)
 
-ggsave(filename="yieldCombinePlot.pdf",plot=finalPlot,width=8,height=5)
+# ggsave(filename="yieldCombinePlot.pdf",plot=finalPlot,width=8,height=5)
 
 pdf("yieldCombinePlot.pdf",width=11,height=8)
 plot(finalPlot)
@@ -75,5 +75,5 @@ plot(yield.model.lm3)
 summary(yield.model.lm3)
 
 # Model 4 to determine the fixed effects while controlling the variation among fields
-yield.model.lmer <- lmer(Yield~Irrigation*Variety+(1|Irrigation),data=yield,REML=TRUE)
+yield.model.lmer <- lmer(Yield~Irrigation*Variety+(1|Field),data=yield,REML=TRUE)
 yield.model.lmer2 <- update(yield.model.lmer,REML=FALSE)
